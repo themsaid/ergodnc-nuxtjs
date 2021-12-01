@@ -2,7 +2,7 @@
   <div class="w-1/2 mx-auto bg-white p-5 rounded-lg">
     <Errors class="mb-5" :errors="errors"></Errors>
 
-    <form autoComplete="off">
+    <form autoComplete="off" @submit.prevent="submitForm">
       <div>
         <Label html-for="email">Email</Label>
 
@@ -51,7 +51,7 @@
           Forgot your password?
         </NuxtLink>
 
-        <Button class="ml-3" @click="submitForm()">Login</Button>
+        <Button class="ml-3">Login</Button>
       </div>
     </form>
   </div>
