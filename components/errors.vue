@@ -5,7 +5,7 @@
     </div>
 
     <ul class="mt-3 list-disc list-inside text-sm text-red-600">
-      <li v-for="(error, i) in errors" :key="i">{error}</li>
+      <li v-for="(error, i) in errors" :key="i">{{error}}</li>
     </ul>
   </div>
 </template>
