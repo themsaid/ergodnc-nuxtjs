@@ -35,9 +35,45 @@ export default {
 
     modules: [
         '@nuxtjs/axios',
+        '@nuxtjs/auth-next'
     ],
 
-    axios: {},
+    auth: {
+        strategies: {
+            cookie: {
+                endpoints: {
+                    csrf: {
+                        url: '/sanctum/csrf-cookie'
+                    },
+                    login: {
+                        url: '/login'
+                    },
+                    logout: {
+                        url: '/logout'
+                    },
+                    user: {
+                        url: '/user'
+                    }
+                },
+                user: {
+                    property: 'data'
+                },
+            }
+        },
+
+        redirect: {
+            login: '/login',
+            logout: '/login',
+            home: '/'
+        },
+
+        plugins: ['~/plugins/axios'],
+    },
+
+    axios: {
+        baseURL: 'http://api.ergodnc.test',
+        credentials: true,
+    },
 
     build: {},
 }

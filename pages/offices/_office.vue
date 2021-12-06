@@ -1,5 +1,7 @@
 <template>
-    <div class="flex">
+    <p v-if="$fetchState.pending">Loading...</p>
+    <p v-else-if="$fetchState.error">Error! :(</p>
+    <div v-else class="flex">
         <div class="w-1/2 h-80 relative overflow-hidden rounded-lg">
             <img :src="office.images[0].path" class="object-cover w-full h-full"></img>
         </div>
@@ -20,18 +22,14 @@
 <script>
 export default {
     data: () => ({
-        office: {
-            "images": [
-                {
-                    "path": "https://via.placeholder.com/400x400.png?text=PLACEHOLDER",
-                }
-            ],
-            "id": 1,
-            "title": "Office One",
-            "description": "Architecto assumenda cum eum. Voluptas qui dignissimos qui voluptate. Mollitia necessitatibus ut sit. Et saepe ea quo nulla.",
-            "price_per_day": 1000,
-        }
+        office: {}
     }),
+
+    async fetch() {
+        const response = await this.$axios.$get('/offices/' + this.$route.params.office)
+
+        this.office = response.data;
+    },
 
     head() {
         return {

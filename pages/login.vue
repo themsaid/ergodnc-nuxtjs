@@ -59,6 +59,9 @@
 
 <script>
 export default {
+    middleware: 'auth',
+    auth: 'guest',
+
     data: () => ({
         errors: [],
         email: '',
@@ -74,7 +77,20 @@ export default {
 
     methods: {
         submitForm(event) {
-            event.preventDefault()
+            this.errors = [];
+
+            this.$auth.loginWith('cookie', {
+                data: {
+                    email: this.email,
+                    password: this.password,
+                    remember: this.remember
+                },
+            }).then(() => this.$router.push('/'))
+                .catch(error => {
+                    if (error.response.status !== 422) throw error
+
+                    this.errors = Object.values(error.response.data.errors).flat();
+                })
         }
     }
 }
